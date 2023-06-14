@@ -1,0 +1,11 @@
+{
+    "name": "UserConfig",
+    "alias": "userconfig",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\UserConfig\\Providers\\UserConfigServiceProvider"
+    ],
+    "files": []
+}

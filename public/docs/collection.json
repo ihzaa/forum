@@ -1,0 +1,285 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/192.168.118.35:3000"
+        }
+    ],
+    "info": {
+        "name": "Laravel-Starter-Project",
+        "_postman_id": "d5b84666-8e83-4af1-921e-f19a0af811e3",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "description": "\nAPIs for auth users",
+            "item": [
+                {
+                    "name": "Login user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"username\":\"minus\",\"password\":\"ratione\"}"
+                        },
+                        "description": "API for logged in a user.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"message\":\"login success\",\"access_token\":\"xxxxx\",\"refresh_token\":\"yyyyy\"}",
+                            "name": "Username dan password match"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"User tidak ditemukan!\"}",
+                            "name": "Username doesn't exist"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"Username atau password salah!\"}",
+                            "name": "Username dan password not match"
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\"message\":\"Could not create token.\", \"error\":\"some thing wrong!\"}",
+                            "name": "Internal server error"
+                        }
+                    ]
+                },
+                {
+                    "name": "Refresh Token",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/refresh",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/refresh"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"refresh_token\":\"id\"}"
+                        },
+                        "description": "Refresh access token when expired.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"message\":\"Refresh token success!\",\"access_token\":\"the_token\"}",
+                            "name": "refresh_token valid"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"Token is Invalid\",\"subcode\":4012}",
+                            "name": "Access token is invalid `go to login page`"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"Token is Expired\",\"subcode\":4013}",
+                            "name": "Access token is expired `go to login page`"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"Authorization Token not found\",\"subcode\":4011}",
+                            "name": "Access token is not found `go to login page`"
+                        }
+                    ]
+                },
+                {
+                    "name": "Logout user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/logout"
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "x-access-token",
+                                "value": "{access_token from login API}"
+                            }
+                        ],
+                        "body": null,
+                        "description": "API for loging out a user."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"message\":\"User successfully signed out\"}",
+                            "name": "header x-access-token valid"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"Token is Invalid\",\"subcode\":4012}",
+                            "name": "Access token is invalid"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"Token is Expired\",\"subcode\":4013}",
+                            "name": "Access token is expired"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"Authorization Token not found\",\"subcode\":4011}",
+                            "name": "Access token is not found"
+                        }
+                    ]
+                },
+                {
+                    "name": "Check logged in user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/check",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/check"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "x-access-token",
+                                "value": "{access_token from login API}"
+                            }
+                        ],
+                        "body": null,
+                        "description": "API for check logged in user."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"username\":\"username\",\"name\":\"name\",\"email\":\"email\"}",
+                            "name": "header x-access-token valid"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"Token is Invalid\",\"subcode\":4012}",
+                            "name": "Access token is invalid"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"Token is Expired\",\"subcode\":4013}",
+                            "name": "Access token is expired"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\":\"Authorization Token not found\",\"subcode\":4011}",
+                            "name": "Access token is not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Registration",
+            "description": "",
+            "item": [
+                {
+                    "name": "Register user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"distinctio\",\"username\":\"id\",\"email\":\"weimann.amy@example.com\",\"password\":\"1234passWORD\",\"password_confirmation\":\"1234passWORD\"}"
+                        },
+                        "description": "API for register a user.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}
